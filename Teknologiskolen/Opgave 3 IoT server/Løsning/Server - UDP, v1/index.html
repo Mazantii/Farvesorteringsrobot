@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>WEB - Socket.IO, v1</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+
+	<!--Get Socket IO from CDN (content delivery network)-->
+	<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+</head>
+<body>
+	<!--Placering til antal sorterede farver-->
+
+	<p>
+		Antal grønne sorteret i alt: <output name="" type="text" id="Gron" value"readonly"></output>
+	</p>
+
+	<p>
+		Antal røde sorteret i alt: <output name="" type="text" id="Rod" value"readonly"></output>
+	</p>
+
+	<p>
+		Antal blå sorteret i alt: <output name="" type="text" id="Blaa" value"readonly"></output>
+	</p>
+
+	<p>
+		Antal gule sorteret i alt: <output name="" type="text" id="Gul" value"readonly"></output>
+	</p>
+	<p>
+		antal hvide sorteret i alt: <output name="" type="text" id="Hvid" value"readonly"></output>
+	</p>
+	<p>
+		Antal sorteret i alt: <output name="" type="text" id="Total" value"readonly"></output>
+	</p>
+
+
+</body>
+</html>
+
+<!--Handle IO Socket-->
+<script>
+	//Local variables
+	var socket;
+	var runLocal = true;
+
+	var TotalSorted = 0;
+	var CurrentGron = 0;
+	var CurrentRod = 0;
+	var CurrentBla = 0;
+	var CurrentGul = 0;
+	var CurrentHvid = 0;
+
+	//Connect to server
+	if (runLocal) {
+		socket = io.connect('http://localhost:3000', { transports: ['websocket'] });
+	}
+	else {
+        socket = io.connect('http://34.88.233.151:3000', { transports: ['websocket'] });
+	}
+
+	//On connected to server
+	socket.on('connect', function (data) {
+		console.log("Connected to server");
+	});
+
+	//On "CurrentColorValue"
+    socket.on("CurrentColorValue", function (data) {
+        console.log("Current color from the server: " + data);
+
+		if(data == "Gron"){
+			CurrentGron++;
+			TotalSorted++;
+			console.log("Antal grønne sorteret i alt: " + CurrentGron);
+			document.getElementById("Gron").value = CurrentGron;
+			document.getElementById("Total").value = TotalSorted;
+		}
+		else if(data == "Rod"){
+			CurrentRod++;
+			TotalSorted++;
+			console.log("Antal røde sorteret i alt: " + CurrentRod);
+			document.getElementById("Rod").value = CurrentRod;
+			document.getElementById("Total").value = TotalSorted;
+		}
+		else if(data == "Bla"){
+			CurrentBla++;
+			TotalSorted++;
+			console.log("Antal blå sorteret i alt: " + CurrentBla);
+			document.getElementById("Blaa").value = CurrentBla;
+			document.getElementById("Total").value = TotalSorted;
+		}
+		else if(data == "Gul"){
+			CurrentGul++;
+			TotalSorted++;
+			console.log("Antal gule sorteret i alt: " + CurrentGul);
+			document.getElementById("Gul").value = CurrentGul;
+			document.getElementById("Total").value = TotalSorted;
+		}
+		else if(data == "Hvid"){
+			CurrentHvid++;
+			TotalSorted++;
+			console.log("Antal hvide sorteret i alt: " + CurrentHvid);
+			document.getElementById("Hvid").value = CurrentHvid;
+			document.getElementById("Total").value = TotalSorted;
+		}
+    });
+
+</script>

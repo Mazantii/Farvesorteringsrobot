@@ -1,0 +1,1 @@
+Hejsa! Fedt du er kommet så langt! Nu skal vi også bruge vores server. Hvis vi ikke har gået det igennem sammen endnu, så hiv fat i Joakim!
